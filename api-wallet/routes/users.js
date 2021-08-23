@@ -32,6 +32,31 @@ route.post('/register',(req, res) => {
     });
 });
 
+//LOGIN
+route.post('/login', (req, res) => {
+    req.getConnection((err, conn) =>{
+        if(err) return res.send(err);
+        conn.query(`use ${config.database}`);
+        conn.query(`SELECT * FROM users WHERE email= '${req.body.email}'`, (err, rows) => {
+            if(err) return res.send(err);
+            if(rows.length > 0){
+                //login success
+                if(rows[0].password === md5(req.body.password)){
+                    res.json(rows[0]);
+                }else{
+                    res.status(400).json({error: "The user entered does not exist or the password is not valid"});
+                    
+                }
+            }else{
+                //login failed
+                res.status(400).json({error: "The user entered does not exist or the password is not valid"});
+            }
+        })
+
+    })
+})
+
+
 
 //validate email for users
 const validateEmail = (email, pass, nam) =>{
