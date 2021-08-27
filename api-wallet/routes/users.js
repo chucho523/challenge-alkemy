@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const express = require ('express');
 const route = express.Router(); //routes
 const joi = require('@hapi/joi'); //validator
@@ -42,7 +43,19 @@ route.post('/login', (req, res) => {
             if(rows.length > 0){
                 //login success
                 if(rows[0].password === md5(req.body.password)){
-                    res.json(rows[0]);
+                    const userForToken = {
+                        email: req.body.email,
+                        id: rows[0].id
+                    }
+                    //create token                    
+                    const token = jwt.sign(
+                        userForToken,
+                        "chucho523",
+                        {
+                            expiresIn: 60 * 60 * 24 * 7 //token expires in 7 days
+                        }
+                    );
+                    res.json({...rows[0], token});
                 }else{
                     res.status(400).json({error: "The user entered does not exist or the password is not valid"});
                     

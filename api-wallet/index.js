@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
-const users = require('./routes/users');//route transactions
+const users = require('./routes/users');//route users
+const transactions = require('./routes/transactions');//route transactions
 const mysql = require('mysql');//mysql module
-const myconn = require('express-myconnection');//connnection
 const configDB = require('./configDB');//database configuration
+const myconn = require('express-myconnection');//connnection
 const cors = require('cors');
+const handleErrors = require('./middlewares/handleErrors');
 
 
 //PORT CONFIGURATION
@@ -16,7 +18,8 @@ app.use(express.json());
 app.use(cors());
 app.use(myconn(mysql, configDB, 'single'));
 app.use('/api/users', users);
-
+app.use('/api/transactions', transactions);
+app.use(handleErrors);
 
 
 //routes
