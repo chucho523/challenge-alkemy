@@ -3,24 +3,14 @@ const routeTransaction = express.Router();//routes
 const joi = require('@hapi/joi'); //validator
 const config = require("../configDB.js");
 const jwt = require('jsonwebtoken');
+const userExtractor = require('../middlewares/userExtractor');//import userExtractor for token
 
 //routes------------
 //add transaction
-routeTransaction.post('/', (req, res) =>{
-    //validar token aqui
-    const authorization = req.get('authorization');
-    let token = null;
-    if(authorization && authorization.toLowerCase().startsWith('bearer')){
-        token= authorization.substring(7);
-    }
-    const decodedToken = jwt.verify(token, 'chucho523')
-
-    if(!token || !decodedToken.id){
-        return res.status(401).json({ error: 'token is mising or invalid'})
-    }
-
-    const {id: id_user} = decodedToken;
+routeTransaction.post('/', userExtractor, (req, res) =>{
     
+    const {id_user} = req; //recover id_user
+
     if(!req.body.amount || !req.body.concept || !req.body.type || !req.body.category || !req.body.date){
         return res.status(400).json({error: 'a parameter is missing'});
     }
