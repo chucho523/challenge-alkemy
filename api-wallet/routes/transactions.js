@@ -86,7 +86,7 @@ routeTransaction.get('/all',userExtractor, (req, res) => {
 //get all transactions per user limited
 routeTransaction.get('/limited', (req, res) => {
     req.getConnection((err, conn) => {
-        if(err) return (res.send(err));
+        if(err) return res.json({error: err.message});
         const {id_user} = req;       
         conn.query(`use ${config.database}`);
         //get transactions
@@ -102,17 +102,31 @@ routeTransaction.get('/limited', (req, res) => {
 //get one transaction
 routeTransaction.get('/one/:id', (req, res) => {
     req.getConnection((err, conn) => {
-        if(err) return (res.send(err));
+        if(err) return res.json({error: err.message});
         const {id_user} = req;       
         conn.query(`use ${config.database}`);
         //get transactions
         conn.query(`SELECT * FROM transaction WHERE id_user = ${id_user} AND id=${req.params.id}`, (err, rows) => {
-            if(err) return res.send(err);
+            if(err) return res.json({error: err.message});
             res.json(rows[0]);
         })
     });
 });
 
+//get transactions for egress
+routeTransaction.get('/egress', (req, res) => {
+    req.getConnection((err, conn) => {
+        if(err) return res.json({error: err.message});
+        const {id_user} = req;       
+        conn.query(`use ${config.database}`);
+        //get transactions
+        conn.query(`SELECT * FROM transaction WHERE id_user = ${id_user} AND type='egress'`, (err, rows) => {
+            if(err) return res.json({error: err.message});
+            let reverse = rows.reverse();
+            res.json(reverse);
+        })
+    });
+});
 const validateAmount = (amt) =>{
     const schema = joi.object({
         amount: joi.number()
