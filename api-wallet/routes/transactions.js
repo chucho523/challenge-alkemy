@@ -84,7 +84,7 @@ routeTransaction.get('/all',userExtractor, (req, res) => {
 });
 
 //get all transactions per user limited
-routeTransaction.get('/limited', (req, res) => {
+routeTransaction.get('/limited',userExtractor, (req, res) => {
     req.getConnection((err, conn) => {
         if(err) return res.json({error: err.message});
         const {id_user} = req;       
@@ -100,7 +100,7 @@ routeTransaction.get('/limited', (req, res) => {
 });
 
 //get one transaction
-routeTransaction.get('/one/:id', (req, res) => {
+routeTransaction.get('/one/:id',userExtractor, (req, res) => {
     req.getConnection((err, conn) => {
         if(err) return res.json({error: err.message});
         const {id_user} = req;       
@@ -114,7 +114,7 @@ routeTransaction.get('/one/:id', (req, res) => {
 });
 
 //get transactions for egress
-routeTransaction.get('/egress', (req, res) => {
+routeTransaction.get('/egress',userExtractor, (req, res) => {
     req.getConnection((err, conn) => {
         if(err) return res.json({error: err.message});
         const {id_user} = req;       
@@ -127,6 +127,44 @@ routeTransaction.get('/egress', (req, res) => {
         })
     });
 });
+
+//get transactions for ingress
+routeTransaction.get('/ingress',userExtractor, (req, res) => {
+    req.getConnection((err, conn) => {
+        if(err) return res.json({error: err.message});
+        const {id_user} = req;       
+        conn.query(`use ${config.database}`);
+        //get transactions
+        conn.query(`SELECT * FROM transaction WHERE id_user = ${id_user} AND type='ingress'`, (err, rows) => {
+            if(err) return res.json({error: err.message});
+            let reverse = rows.reverse();
+            res.json(reverse);
+        })
+    });
+});
+
+//Delete transaction
+routeTransaction.delete('/:id',userExtractor, (req, res) =>{
+    req.getConnection((err, conn) => {
+        if(err) return res.json({error: err.message});
+        const {id_user} = req;       
+        conn.query(`use ${config.database}`);
+
+        conn.query(`SELECT id_user FROM transaction WHERE id = ${req.params.id}`, (err, rows) =>{
+            if (err) return res.status(500).json({error: err.message})
+            if(rows[0].id_user !== id_user){
+                return res.status(403).json({error: 'permission to access resource denied, invalid token'});
+            }
+            //delete transaction
+            conn.query('DELETE FROM transaction WHERE id = ?',[req.params.id] ,(err) => {
+                if(err) return res.json({error: err.message});
+                res.json({data: `the transaction with id= ${req.params.id}has been deleted`});
+            });
+        })
+        
+    })
+});
+
 const validateAmount = (amt) =>{
     const schema = joi.object({
         amount: joi.number()
