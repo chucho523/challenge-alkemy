@@ -99,6 +99,20 @@ routeTransaction.get('/limited', (req, res) => {
     });
 });
 
+//get one transaction
+routeTransaction.get('/one/:id', (req, res) => {
+    req.getConnection((err, conn) => {
+        if(err) return (res.send(err));
+        const {id_user} = req;       
+        conn.query(`use ${config.database}`);
+        //get transactions
+        conn.query(`SELECT * FROM transaction WHERE id_user = ${id_user} AND id=${req.params.id}`, (err, rows) => {
+            if(err) return res.send(err);
+            res.json(rows[0]);
+        })
+    });
+});
+
 const validateAmount = (amt) =>{
     const schema = joi.object({
         amount: joi.number()
