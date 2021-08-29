@@ -12,8 +12,8 @@ module.exports = (req, res, next) => {
         return res.status(401).json({ error: 'token is mising or invalid'})
     }
 
-    const {id: id_user} = decodedToken;
-    req.id_user = id_user;
+    const {id} = decodedToken;
+    req.id_user = id;
 
     next();
 }

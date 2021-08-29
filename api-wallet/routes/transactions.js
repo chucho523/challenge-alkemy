@@ -31,12 +31,50 @@ routeTransaction.post('/', userExtractor, (req, res) =>{
     })
 });
 
-const validateAmount = (amount) =>{
+//update transaction
+routeTransaction.put('/:id',userExtractor, (req, res) =>{
+    if(!req.body.amount || !req.body.concept || !req.body.type || !req.body.category || !req.body.date){
+        return res.json({error: 'a parameter is missing'});
+    }
+    req.getConnection((err, conn) => {
+        if(err) return res.send(err);
+        conn.query(`use ${config.database}`);
+        
+        const {id_user} = req; //recover id_user
+
+        const {amount, concept, type, category, date} = req.body;
+        const newBody = {amount, concept, type, category, date, id_user};
+        conn.query(`SELECT id_user FROM transaction WHERE id = ${req.params.id}`, (err, rows) =>{
+            if (err) return res.status(500).json({error: err.message})
+            if(rows[0].id_user !== id_user){
+                return res.status(403).json({error: 'permission to access resource denied, invalid token'});
+            }
+
+            //add transaction
+            conn.query('UPDATE transaction set ? WHERE id = ?',[newBody, req.params.id] ,(err, rows) => {
+                const {error} = validateAmount(req.body.amount);//validate amount format
+                if(error){
+                    return res.json({error: "enter a valid amount"})
+                }
+                if(err) return res.json({error: err.message})
+
+                res.json({data: 'the transaction has been updated'});
+                
+            });
+
+        })
+        
+        
+    })
+});
+
+const validateAmount = (amt) =>{
     const schema = joi.object({
-        monto: joi.number()
+        amount: joi.number()
+            .positive()
             .required()
     });
-    return (schema.validate({monto: amount}));
+    return (schema.validate({amount: amt}));
 }
 
 module.exports = routeTransaction;
