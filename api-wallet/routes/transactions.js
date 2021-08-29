@@ -83,6 +83,22 @@ routeTransaction.get('/all',userExtractor, (req, res) => {
     });
 });
 
+//get all transactions per user limited
+routeTransaction.get('/limited', (req, res) => {
+    req.getConnection((err, conn) => {
+        if(err) return (res.send(err));
+        const {id_user} = req;       
+        conn.query(`use ${config.database}`);
+        //get transactions
+        conn.query(`SELECT * FROM transaction WHERE id_user = ${id_user}`, (err, rows) => {
+            if(err) return res.json({error: err.message});
+            let reverse = rows.reverse();
+            reverse = reverse.splice(0,10);
+            res.json(reverse);
+        })
+    });
+});
+
 const validateAmount = (amt) =>{
     const schema = joi.object({
         amount: joi.number()
