@@ -15,18 +15,18 @@ route.post('/register',(req, res) => {
         conn.query(`SELECT * FROM users WHERE email= '${req.body.email}'`, (err, rows) =>{
             if(err) return res.send(err);
             if(rows.length > 0){
-                res.status(400).json({error: "The user already exists"});
+                res.status(400).json({error: {path: 'email', message:'This email already exists'}});
             }else{
                 const {error} = validateEmail(req.body.email, req.body.password, req.body.name);//validate email format
                 if(error){
-                    res.status(400).json({error: "Enter a email address or valid password, or name"});
+                    res.status(400).json({error: error.details[0]});
                     return;
                 }
                 //register user
                 req.body.password = md5(req.body.password);//encrypt password
                 conn.query('INSERT INTO users set ?',[req.body] ,(err, rows) => {
                     if(err) return res.send(err)
-                    res.send('the user has been registered') 
+                    res.json({data: 'the user has been registered'}) 
                 });               
             }
         });
