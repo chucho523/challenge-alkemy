@@ -57,12 +57,12 @@ route.post('/login', (req, res) => {
                     );
                     res.json({...rows[0], token});
                 }else{
-                    res.status(400).json({error: "The user entered does not exist or the password is not valid"});
+                    res.status(400).json({error: {path: 'email', message:"The user entered does not exist or the password is not valid"}});
                     
                 }
             }else{
                 //login failed
-                res.status(400).json({error: "The user entered does not exist or the password is not valid"});
+                res.status(400).json({error: {path: 'email', message:"The user entered does not exist or the password is not valid"}});
             }
         })
 

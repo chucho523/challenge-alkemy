@@ -1,9 +1,9 @@
 import React from 'react'
-import Register from '../../components/common/Register';
+import Register from '../../components/common/RegisterLogin';
 
 const RegisterView = () => {
     return (
-        <Register></Register>
+        <Register type={'register'}></Register>
     )
 }
 
