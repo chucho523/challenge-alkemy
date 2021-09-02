@@ -1,10 +1,11 @@
 import React from 'react';
-import RegisterView from './views/Register';
-import LoginView from './views/Login';
+/* import RegisterView from './views/Register';
+import LoginView from './views/Login'; */
+import PostTransactionView from './views/PostTransaction';
 function App() {
   return (
     <div className="App">
-      <LoginView></LoginView>
+      <PostTransactionView></PostTransactionView>
     </div>
   );
 }

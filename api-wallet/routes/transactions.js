@@ -12,7 +12,7 @@ routeTransaction.post('/', userExtractor, (req, res) =>{
     const {id_user} = req; //recover id_user
 
     if(!req.body.amount || !req.body.concept || !req.body.type || !req.body.category || !req.body.date){
-        return res.status(400).json({error: 'a parameter is missing'});
+        res.status(400).json({error: {path: 'genericError', message:"a parameter is missing"}});
     }
     req.getConnection((err, conn) => {
         if(err) return res.send(err);
@@ -23,7 +23,7 @@ routeTransaction.post('/', userExtractor, (req, res) =>{
         conn.query('INSERT INTO transaction set ?',[newBody] ,(err, rows) => {
             const {error} = validateAmount(req.body.amount);//validate amount format
             if(error){
-                return res.status(400).json({error: "enter a valid amount"})
+                res.status(400).json({error: error.details[0]});
             }
             if(err) return res.send(err)
             res.json({data: 'the transaction has been added'});

@@ -1,0 +1,97 @@
+import React, {Fragment} from 'react'
+import postTransaction from '../../../services/postTransaction';
+import GenericButton from '../GenericButton';
+import {Formik} from 'formik'; 
+import './styles.scss';
+
+const PostUpdateTransaction = ({type}) => {
+    return (
+            <Fragment>
+                <Formik
+                    initialValues={{
+                        amount: '',
+                        concept:'',
+                        type:'ingress',
+                        category:'',
+                        date: ''            
+                    }}
+                    //validate errors
+                    validate= {(values => {
+                        const errors = {};
+                        //errors amount
+                        if(!values.amount){
+                            errors.amount = 'Required amount'
+                        }else if(!(values.amount>0)){
+                            errors.amount = "Enter a valid amount"
+                        }
+                        //errors concept
+                        if(!values.concept){
+                            errors.concept = 'Required concept'
+                        }else if(values.concept.length < 3){
+                            errors.concept = 'The concept must contain more than 3 characters'
+                        }
+                        if(!values.category){
+                            errors.category = 'Required category'
+                        }else if(values.category.length <3){
+                            errors.category = 'The concept must contain more than 3 characters'
+                        }
+                        if(!values.date){
+                            errors.date = "Required date"
+                        }
+                        return errors;
+                    })}
+                    onSubmit={(values, {setFieldError}) => {
+                        if(type === 'post'){
+                            //add transaction
+                            return postTransaction(values)
+                                .then(data => console.log(data))
+                                .catch((e) => {
+                                    const dataError = e.response.data.error;//get error
+                                    setFieldError(dataError.path, dataError.message)//set error
+                                })
+                        }else{
+                            //update transaction
+                            return postTransaction(values)
+                                .then(data => {
+                                   console.log(data);
+                                })
+                                .catch((e) => {
+                                    const dataError = e.response.data.error;//get error
+                                    setFieldError(dataError.path, dataError.message)//set error
+                                })
+                        }
+                       
+                    }}
+                >
+                    {
+                        ({errors, handleSubmit, handleChange, isSubmitting}) => 
+                            <form onSubmit={handleSubmit} className="registerForm">
+                                <h4>{type} Form</h4>
+                                <input className="controls" placeholder="Amount" name='amount' type="text" onChange={handleChange}></input>
+                                {errors.amount && <p>{errors.amount}</p> /* show error */}
+
+                                <textarea className="controls" maxLength="60" cols="30" rows="3" placeholder="Concept" name='concept' type="text" onChange={handleChange}></textarea>
+                                {errors.concept && <p>{errors.concept}</p>/* show error */}
+
+                                <select name="concept" defaultValue="ingress" className='controls'>
+                                    <option value="ingress">Ingress</option>
+                                    <option value="egress">Egress</option>
+                                    
+                                </select>
+                                {errors.type && <p>{errors.type}</p> /* show error */}
+
+                                <input className="controls" placeholder="Category" name='category' type="text" onChange={handleChange}></input>
+                                {errors.category && <p>{errors.category}</p> /* show error */}
+
+                                <input name='date' className="controls" type="date" onChange={handleChange}></input>
+                                {errors.date && <p>{errors.date}</p> /* show error */}
+                                <GenericButton type="submit" disabled={isSubmitting} text={type} />
+                                
+                            </form>                   
+                    }
+                </Formik>
+            </Fragment>
+        )
+}
+
+export default PostUpdateTransaction

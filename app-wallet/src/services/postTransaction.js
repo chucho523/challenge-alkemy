@@ -9,7 +9,7 @@ export default function postTransaction ({amount, concept, type, category, date}
     return axios.post(ENDPOINT+'/transactions', {amount, concept, type, category, date}, credentials)
 
     .then(response =>{
-        return response;
+        return response.data;
     })
     
 }
