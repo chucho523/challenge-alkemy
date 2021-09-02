@@ -3,7 +3,7 @@ import Register from '../../components/common/RegisterLogin';
 
 const RegisterView = () => {
     return (
-        <Register type={'register'}></Register>
+        <Register type={'Register'}></Register>
     )
 }
 

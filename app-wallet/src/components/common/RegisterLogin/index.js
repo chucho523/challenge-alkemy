@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react'
 import register from '../../../services/register';
 import login from '../../../services/login';
+import GenericButton from '../GenericButton';
 import {Formik} from 'formik'; 
 import './styles.scss';
 
@@ -15,19 +16,19 @@ const RegisterLogin = ({type}) => {
                 }}
                 validate= {(values => {
                     const errors = {};
-
+                    //errors email
                     if(!values.email){
                         errors.email = 'Required email'
                     }
-
-                    if(type === 'register'){
+                    //errors name
+                    if(type === 'Register'){
                         if(!values.name){
                             errors.name = 'Required name'
                         }else if(values.name.length < 3){
                             errors.password = 'The password must contain more than 3 characters'
                         }
                     }
-
+                    //errors password
                     if(!values.password){
                         errors.password = 'Required password'
                     }else if(values.password.length < 3){
@@ -37,7 +38,7 @@ const RegisterLogin = ({type}) => {
                     return errors;
                 })}
                 onSubmit={(values, {setFieldError}) => {
-                    if(type === 'register'){
+                    if(type === 'Register'){
                         //register user
                         return register(values)
                             .catch((e) => {
@@ -47,7 +48,9 @@ const RegisterLogin = ({type}) => {
                     }else{
                         //login user
                         return login(values)
-                            .then(jwt => console.log(jwt))
+                            .then(jwt => {
+                                window.localStorage.setItem('token', jwt)
+                            })
                             .catch((e) => {
                                 const dataError = e.response.data.error;//get error
                                 setFieldError(dataError.path, dataError.message)//set error
@@ -63,13 +66,13 @@ const RegisterLogin = ({type}) => {
                             <input className="controls" placeholder="Enter your email" name='email' type="text" onChange={handleChange}></input>
                             {errors.email && <p>{errors.email}</p> /* show error */}
                             {
-                                type === 'register' &&
+                                type === 'Register' &&
                                 <input className="controls" placeholder="Enter your name" name='name' type="text" onChange={handleChange}></input>
                             }
                             {errors.name && <p>{errors.name /* show error */}</p>}
                             <input className="controls" placeholder="Enter your password" name='password' type="password" onChange={handleChange}></input>
                             {errors.password && <p>{errors.password}</p>/* show error */}
-                            <button type="submit" disabled={isSubmitting}>{type}</button>
+                            <GenericButton type="submit" disabled={isSubmitting} text={type} />
                             
                         </form>                   
                 }
