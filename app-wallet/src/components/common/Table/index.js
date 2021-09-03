@@ -8,6 +8,7 @@ const Table = ({data}) => {
             <thead>
                 <tr>
                     <th>Amount</th>
+                    <th>Concept</th>
                     <th>Type</th>
                     <th>Category</th>
                     <th>Date</th>
@@ -20,6 +21,7 @@ const Table = ({data}) => {
                         return(
                             <tr key={transaction.id}>
                                 <td>{transaction.amount}</td>
+                                <td>{transaction.concept.slice(0,10)}</td>
                                 <td>{transaction.type}</td>
                                 <td>{transaction.category}</td>
                                 <td>{moment(transaction.date).format('DD/MM/YYYY')}</td>
