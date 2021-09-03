@@ -1,0 +1,32 @@
+@import '../../styles/_colors.scss';
+
+.container{
+    display: flex;
+    flex-direction: row;
+    margin-top: 4rem;
+    color:white;
+
+    
+    div{
+        width: 50%;
+
+        fieldset{
+            background-color: $backgroundColor;
+            border-radius: .4rem;
+
+            label{
+                margin-right: 1.5rem;
+            }
+        }
+        input{
+            background: $backgroundColor;
+            border-radius: .2rem;
+            border: .5px solid white;
+            padding: .5rem;
+            margin-bottom: .2rem;
+            font-family: 'Roboto';
+            color: white;
+        }
+    }
+    
+}

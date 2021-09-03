@@ -1,20 +1,33 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useState, useEffect} from 'react'
 import postTransaction from '../../../services/postTransaction';
 import updateTransaction from '../../../services/updateTransaction';
+import getTransaction from '../../../services/getTransaction';
 import GenericButton from '../GenericButton';
 import {Formik} from 'formik'; 
 import './styles.scss';
 
 const PostUpdateTransaction = ({type, idTransaction}) => {
+    const [transaction, setTransaction] = useState({
+        amount: '',
+        concept: '',
+        type: 'ingress',
+        category: '',
+        date: ''
+    });
+    useEffect(()=>{
+        if(type === "update"){
+            getTransaction(idTransaction).then(data => setTransaction(data))
+        }
+    },[idTransaction, type])
     return (
             <Fragment>
                 <Formik
                     initialValues={{
-                        amount: '',
-                        concept:'',
-                        type:'ingress',
-                        category:'',
-                        date: ''            
+                        amount: transaction.amount,
+                        concept: transaction.concept,
+                        type: transaction.type,
+                        category: transaction.category,
+                        date: transaction.date           
                     }}
                     //validate errors
                     validate= {(values => {
@@ -65,7 +78,7 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                     }}
                 >
                     {
-                        ({errors, handleSubmit, handleChange, isSubmitting}) => 
+                        ({errors, handleSubmit, handleChange, isSubmitting, values}) => 
                             <form onSubmit={handleSubmit} className="registerForm">
                                 <h4>{type} Form</h4>
                                 <input className="controls" placeholder="Amount" name='amount' type="text" onChange={handleChange}></input>
@@ -80,7 +93,7 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                                         <option value="egress">Egress</option>                                   
                                      </select>
                                     :
-                                    <select name="concept" defaultValue="ingress" className='controls' disabled>
+                                    <select name="concept" className='controls' disabled>
                                         <option value="ingress">Ingress</option>
                                         <option value="egress">Egress</option>                                   
                                     </select> 

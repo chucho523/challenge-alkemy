@@ -3,7 +3,7 @@ import UpdateTransaction from '../../components/common/PostUpdateTransaction'
 
 const UpdateTransactionView = () => {
     return (
-        <UpdateTransaction type={'update'} idTransaction={4}/>
+        <UpdateTransaction type={'update'} idTransaction={3}/>
     )
 }
 
