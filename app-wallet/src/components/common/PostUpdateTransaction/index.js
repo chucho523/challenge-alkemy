@@ -1,10 +1,11 @@
 import React, {Fragment} from 'react'
 import postTransaction from '../../../services/postTransaction';
+import updateTransaction from '../../../services/updateTransaction';
 import GenericButton from '../GenericButton';
 import {Formik} from 'formik'; 
 import './styles.scss';
 
-const PostUpdateTransaction = ({type}) => {
+const PostUpdateTransaction = ({type, idTransaction}) => {
     return (
             <Fragment>
                 <Formik
@@ -51,7 +52,7 @@ const PostUpdateTransaction = ({type}) => {
                                 })
                         }else{
                             //update transaction
-                            return postTransaction(values)
+                            return updateTransaction(values, idTransaction)
                                 .then(data => {
                                    console.log(data);
                                 })
@@ -72,12 +73,19 @@ const PostUpdateTransaction = ({type}) => {
 
                                 <textarea className="controls" maxLength="60" cols="30" rows="3" placeholder="Concept" name='concept' type="text" onChange={handleChange}></textarea>
                                 {errors.concept && <p>{errors.concept}</p>/* show error */}
+                                {   type==='post'
+                                    ?
+                                     <select name="concept" defaultValue="ingress" className='controls'>
+                                        <option value="ingress">Ingress</option>
+                                        <option value="egress">Egress</option>                                   
+                                     </select>
+                                    :
+                                    <select name="concept" defaultValue="ingress" className='controls' disabled>
+                                        <option value="ingress">Ingress</option>
+                                        <option value="egress">Egress</option>                                   
+                                    </select> 
+                                }
 
-                                <select name="concept" defaultValue="ingress" className='controls'>
-                                    <option value="ingress">Ingress</option>
-                                    <option value="egress">Egress</option>
-                                    
-                                </select>
                                 {errors.type && <p>{errors.type}</p> /* show error */}
 
                                 <input className="controls" placeholder="Category" name='category' type="text" onChange={handleChange}></input>
