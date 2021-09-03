@@ -4,7 +4,7 @@ import './styles.scss';
 
 const Table = ({data}) => {
     return (
-        <table>
+        <table >
             <thead>
                 <tr>
                     <th>Amount</th>
@@ -15,7 +15,7 @@ const Table = ({data}) => {
             </thead>
             <tbody>
                 {
-                   !data? <tr><td>no data available</td></tr>:
+                   !data[0]? <tr ><td className='noData'>no data available</td></tr>:
                     data.map(transaction => {
                         return(
                             <tr key={transaction.id}>

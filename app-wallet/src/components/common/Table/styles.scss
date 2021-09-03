@@ -1,8 +1,19 @@
 table{
-    width: 95%;
-    text-align: center;
-
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    border-collapse: collapse;
+    th, td{
+        padding: 1.2rem;
+        box-shadow: 0px 2px 0px 0px #333;
+    }
+    thead{
+        background: #3b2c5a;
+    }
     tbody{
-        border: 1px solid #666;
+        tr{
+            padding: .5rem;
+            font-size: 1.2rem;
+        }
     }
 }

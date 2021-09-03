@@ -3,7 +3,6 @@
 .container{
     display: flex;
     flex-direction: row;
-    margin-top: 4rem;
     color:white;
     
     div{
@@ -29,17 +28,42 @@
     }
     
 }
-
+.title{
+    display:flex;
+    justify-content: center;
+    margin-bottom: 0;
+    h4{
+        font-size: 2rem;
+        color: white;
+    }
+}
 .centerTable{
     margin-top: 4rem;
     display:flex;
     justify-content: center;
     color:white;
     .tableContainer{
-        width: 90%;
-        height: 200px;
-        border: 1px solid white;
-        border-radius: .5rem;
+        width: 95%;
+        display:flex;
+        justify-content: center;
         background: $backgroundColor;
+    }
+}
+
+@media (max-width: 568px){
+    .left > fieldset{
+        display: flex;
+        flex-direction: column;
+    }
+    .tableContainer{
+        width: 100%;
+    }
+}
+@media (max-width: 262px){
+    .container{
+        flex-direction: column;
+        div{
+            width: 100%
+        }
     }
 }
