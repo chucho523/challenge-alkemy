@@ -5,7 +5,6 @@
     flex-direction: row;
     margin-top: 4rem;
     color:white;
-
     
     div{
         width: 50%;
@@ -29,4 +28,18 @@
         }
     }
     
+}
+
+.centerTable{
+    margin-top: 4rem;
+    display:flex;
+    justify-content: center;
+    color:white;
+    .tableContainer{
+        width: 90%;
+        height: 200px;
+        border: 1px solid white;
+        border-radius: .5rem;
+        background: $backgroundColor;
+    }
 }

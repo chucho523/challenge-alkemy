@@ -16,12 +16,15 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
     });
     useEffect(()=>{
         if(type === "update"){
-            getTransaction(idTransaction).then(data => setTransaction(data))
+            getTransaction(idTransaction).then(data => {
+                console.log(data)
+                setTransaction(data)})
         }
     },[idTransaction, type])
     return (
             <Fragment>
                 <Formik
+                    enableReinitialize
                     initialValues={{
                         amount: transaction.amount,
                         concept: transaction.concept,
@@ -29,6 +32,7 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                         category: transaction.category,
                         date: transaction.date           
                     }}
+                    
                     //validate errors
                     validate= {(values => {
                         const errors = {};
@@ -78,7 +82,7 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                     }}
                 >
                     {
-                        ({errors, handleSubmit, handleChange, isSubmitting, values}) => 
+                        ({errors, handleSubmit, handleChange, isSubmitting}) => 
                             <form onSubmit={handleSubmit} className="registerForm">
                                 <h4>{type} Form</h4>
                                 <input className="controls" placeholder="Amount" name='amount' type="text" onChange={handleChange}></input>
