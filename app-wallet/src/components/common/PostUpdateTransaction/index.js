@@ -95,11 +95,19 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                         if(type === 'post'){
                             //add transaction
                             return postTransaction(values)
-                                .then(data => {console.log(data)
-                                    console.log(values);
+                                .then(data => {
+                                    swal({
+                                        title: "successfull",
+                                        text: "transaction added successfully",
+                                        icon: 'success',
+                                        button: 'Ok',
+                                        timer: '2000'
+                                    }).then(() =>{
+                                         history.push('/dashboard');
+                                    })
                                 })
                                 .catch((e) => {
-                                    console.log(values);
+                                    
                                     const dataError = e.response.data.error;//get error
                                     setFieldError(dataError.path, dataError.message)//set error
                                 })

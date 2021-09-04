@@ -3,6 +3,7 @@ import getAllTransactions from '../../services/getAllTransactions';
 import getTransactionsFilter from '../../services/getTransactionsFilter';
 import Table from '../../components/common/Table';
 import './styles.scss';
+import Balance from '../../components/common/Balance';
 
 
 const Dashboard = () => {
@@ -47,7 +48,9 @@ const Dashboard = () => {
     }, [])
     return (
         <Fragment>
-            <div className="title"><h4>Filter By</h4></div>
+            <div className="title"><h4>Balance:</h4></div>
+            <Balance data={transactions}/>
+            <div className="filterTitle"><h4>Filter By</h4></div>
             <div className="container">
                 <div className="left">
                     <fieldset>
