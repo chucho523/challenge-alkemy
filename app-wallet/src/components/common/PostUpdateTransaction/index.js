@@ -107,7 +107,15 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                             //update transaction
                             return updateTransaction(values, idTransaction)
                                 .then(data => {
-                                   console.log(data);
+                                   swal({
+                                       title: "successfull",
+                                       text: "transaction edited successfully",
+                                       icon: 'success',
+                                       button: 'Ok',
+                                       timer: '2000'
+                                   }).then(() =>{
+                                        history.push('/dashboard');
+                                   })
                                 })
                                 .catch((e) => {
                                     const dataError = e.response.data.error;//get error
@@ -148,10 +156,11 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                                 {errors.date && <p>{errors.date}</p> /* show error */}
                                 <GenericButton type="submit" disabled={isSubmitting} text={type} />
                                 {type === 'update' &&
-                                    <button className="btnDelete" onClick={del}>Delete</button>
-                                }
+                                    <button className="btnDelete" type="button" onClick={del}>Delete</button>}
                                 
-                            </form>                   
+                            </form>  
+
+                                                 
                     }
                 </Formik>
             </Fragment>

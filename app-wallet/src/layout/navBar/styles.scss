@@ -9,6 +9,42 @@ nav{
     .containerNav{
         width: 100%;
     }
+    ul {
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: auto;
+        margin-right: .5rem;
+        li{
+            list-style: none;
+            .add{
+                border:none;
+                background: $ingressColor;
+                border-radius: .2rem;
+                padding: .4rem;
+                margin-left: .5rem;
+                
+                &:hover{
+                    background: $greenLight;
+                    cursor: pointer;
+                }
+            }
+            .add2{
+                background: #e63232;
+            }
+            .logOut{
+                border:none;
+                background: $egressColor;
+                border-radius: .2rem;
+                padding: .4rem;
+                
+                &:hover{
+                    background: $errorColor;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
     div{
         display: flex;
         flex-direction: row;
@@ -17,43 +53,11 @@ nav{
        .welcome{
            margin-left: auto;
            font-size: 1.3rem;
-           border-bottom: 1px solid #fff;
+           text-decoration: underline;
        }
        
     
-        ul {
-            display:flex;
-            flex-direction: row;
-            align-items: center;
-            margin-left: auto;
-            margin-right: .5rem;
-            li{
-                list-style: none;
-                .add{
-                    border:none;
-                    background: $ingressColor;
-                    border-radius: .2rem;
-                    padding: .4rem;
-                    margin-left: .5rem;
-                    
-                    &:hover{
-                        background: $greenLight;
-                        cursor: pointer;
-                    }
-                }
-                .logOut{
-                    border:none;
-                    background: $egressColor;
-                    border-radius: .2rem;
-                    padding: .4rem;
-                    
-                    &:hover{
-                        background: $errorColor;
-                        cursor: pointer;
-                    }
-                }
-            }
-        }
+       
     }
 
     

@@ -23,7 +23,18 @@ const NavBar = ({token}) => {
                 </div>
                 :
                 <ul>
-                    <li>Cosas</li>
+                    <li>
+                        <button className="add"
+                            onClick={() => history.push('/login')}
+                        >
+                            SignIn
+                        </button>
+                        <button className="add add2"
+                            onClick={() => history.push('/register')}
+                        >
+                            SignUp
+                        </button>
+                     </li>
                 </ul>
             }
         </nav>
