@@ -9,6 +9,7 @@ import UpdateTransactionView from '../views/UpdateTransaction';
 
 //layout
 import NavBar from '../layout/navBar';
+import Footer from '../layout/footer';
 
 const Routes = () => {
     let token = window.localStorage.getItem('token');
@@ -37,6 +38,7 @@ const Routes = () => {
                     return token ?  <UpdateTransactionView />: <Redirect to="/login" />
                 }} />
             </Switch>
+            <Footer />
         </Router>
     )
 }
