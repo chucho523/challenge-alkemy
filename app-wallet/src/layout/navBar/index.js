@@ -1,12 +1,12 @@
 import React from 'react'
-import { useHistory } from 'react-router';
+import { useHistory, Link} from 'react-router-dom';
 import './styles.scss';
 
 const NavBar = ({token}) => {
     const history = useHistory();
     return (
         <nav>
-            <div className="wallet">Wallet</div>
+            <Link to="/dashboard"  className="wallet">Wallet</Link>
             {
                 token ? 
                 <div className='containerNav'>

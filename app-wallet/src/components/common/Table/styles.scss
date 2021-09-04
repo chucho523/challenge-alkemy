@@ -19,6 +19,10 @@ table{
     }
 }
 
+.clickeable:hover{
+    cursor: pointer;
+}
+
 @media (max-width: 640px){
     table{
         th, td{

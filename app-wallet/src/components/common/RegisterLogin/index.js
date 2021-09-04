@@ -3,9 +3,11 @@ import register from '../../../services/register';
 import login from '../../../services/login';
 import GenericButton from '../GenericButton';
 import {Formik} from 'formik'; 
+import usePasswordToggle from '../../hooks/usePasswordToggle';
 import './styles.scss';
 
 const RegisterLogin = ({type}) => {
+    const [passwordInputType, ToggleIcon] = usePasswordToggle();
     return (
         <Fragment>
             <Formik
@@ -71,7 +73,11 @@ const RegisterLogin = ({type}) => {
                                 <input className="controls" placeholder="Enter your name" name='name' type="text" onChange={handleChange}></input>
                             }
                             {errors.name && <p>{errors.name /* show error */}</p>}
-                            <input className="controls" placeholder="Enter your password" name='password' type="password" onChange={handleChange}></input>
+                            
+                            <div className="password">
+                                <input className="controls" placeholder="Enter your password" name='password' type={passwordInputType} onChange={handleChange}></input>
+                                <span className='password-toggle-icon'>{ToggleIcon}</span>
+                            </div>
                             {errors.password && <p>{errors.password}</p>/* show error */}
                             <GenericButton type="submit" disabled={isSubmitting} text={type} />
                             

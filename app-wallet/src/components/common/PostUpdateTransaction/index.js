@@ -10,7 +10,7 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
     const [transaction, setTransaction] = useState({
         amount: '',
         concept: '',
-        type: '',
+        type: 'ingress',
         category: '',
         date: ''
     });
