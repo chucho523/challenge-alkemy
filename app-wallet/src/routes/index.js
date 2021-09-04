@@ -1,17 +1,22 @@
 import React from 'react'
 import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+//views
 import LoginView from '../views/Login'; 
 import RegisterView from '../views/Register';
 import Dashboard from '../views/Dashboard';
 import PostTransactionView from '../views/PostTransaction';
 import UpdateTransactionView from '../views/UpdateTransaction';
 
+//layout
+import NavBar from '../layout/navBar';
+
 const Routes = () => {
-    const token = window.localStorage.getItem('token');
+    let token = window.localStorage.getItem('token');
     return (
         <Router>
+            <NavBar token={token}/>
             <Switch>
-
+    
                 <Route path="/register" render={() =>{
                     return token ? <Redirect to="/dashboard" /> : <RegisterView />
                 }} />

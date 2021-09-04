@@ -49,7 +49,8 @@ const RegisterLogin = ({type}) => {
                         //login user
                         return login(values)
                             .then(jwt => {
-                                window.localStorage.setItem('token', jwt)
+                                window.localStorage.setItem('token', jwt.token);
+                                window.localStorage.setItem('user', jwt.name);
                             })
                             .catch((e) => {
                                 const dataError = e.response.data.error;//get error

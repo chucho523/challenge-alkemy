@@ -10,7 +10,7 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
     const [transaction, setTransaction] = useState({
         amount: '',
         concept: '',
-        type: 'ingress',
+        type: '',
         category: '',
         date: ''
     });
@@ -62,8 +62,11 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                         if(type === 'post'){
                             //add transaction
                             return postTransaction(values)
-                                .then(data => console.log(data))
+                                .then(data => {console.log(data)
+                                    console.log(values);
+                                })
                                 .catch((e) => {
+                                    console.log(values);
                                     const dataError = e.response.data.error;//get error
                                     setFieldError(dataError.path, dataError.message)//set error
                                 })
@@ -92,12 +95,12 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                                 {errors.concept && <p>{errors.concept}</p>/* show error */}
                                 {   type==='post'
                                     ?
-                                     <select name="concept" defaultValue="ingress" className='controls'>
+                                     <select name="type" onChange={handleChange} defaultValue="ingress" className='controls'>
                                         <option value="ingress">Ingress</option>
                                         <option value="egress">Egress</option>                                   
                                      </select>
                                     :
-                                    <select name="concept" className='controls' disabled>
+                                    <select name="type" onChange={handleChange} className='controls' disabled>
                                         <option value="ingress">Ingress</option>
                                         <option value="egress">Egress</option>                                   
                                     </select> 

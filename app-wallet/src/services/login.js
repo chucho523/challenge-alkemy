@@ -7,8 +7,7 @@ export default function register ({email, password}){
         return response;
     })
     .then(data=>{
-        const {token} = data.data;
-        return token;
+        return data.data;
     })
     
 }
