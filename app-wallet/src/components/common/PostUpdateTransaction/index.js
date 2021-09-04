@@ -1,12 +1,18 @@
 import React, {Fragment, useState, useEffect} from 'react'
+import {useHistory} from 'react-router-dom';
+//import services
 import postTransaction from '../../../services/postTransaction';
 import updateTransaction from '../../../services/updateTransaction';
 import getTransaction from '../../../services/getTransaction';
+import deleteTransaction from '../../../services/deleteTransaction';
+
 import GenericButton from '../GenericButton';
 import {Formik} from 'formik'; 
+import swal from 'sweetalert'; //import alerts
 import './styles.scss';
 
 const PostUpdateTransaction = ({type, idTransaction}) => {
+    const history = useHistory();
     const [transaction, setTransaction] = useState({
         amount: '',
         concept: '',
@@ -14,6 +20,33 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
         category: '',
         date: ''
     });
+
+    //functions
+    const del = () => {
+        //confirm delete
+        swal({
+            title:'Delete',
+            text: 'are you sure you want to delete the transaction?',
+            icon: 'warning',
+            buttons: ['No', 'Yes']
+        }).then(res =>{
+            if(res){
+                //notification delete
+                return deleteTransaction(idTransaction)
+                    .then(resp => {
+                        swal({
+                            title:'successful',
+                            text:'transaction deleted successfully',
+                            icon:'success',
+                            button: 'ok',
+                            timer: 2000
+                        }).then(() => {
+                            history.push('/dashboard')
+                        })
+                    })
+            }
+        })
+    }
     useEffect(()=>{
         if(type === "update"){
             getTransaction(idTransaction).then(data => {
@@ -114,6 +147,9 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                                 <input name='date' className="controls" type="date" onChange={handleChange}></input>
                                 {errors.date && <p>{errors.date}</p> /* show error */}
                                 <GenericButton type="submit" disabled={isSubmitting} text={type} />
+                                {type === 'update' &&
+                                    <button className="btnDelete" onClick={del}>Delete</button>
+                                }
                                 
                             </form>                   
                     }
