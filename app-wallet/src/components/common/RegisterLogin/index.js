@@ -69,6 +69,7 @@ const RegisterLogin = ({type}) => {
                             .then(jwt => {
                                 window.localStorage.setItem('token', jwt.token);
                                 window.localStorage.setItem('user', jwt.name);
+                                window.localStorage.setItem('id',jwt.id)
                                 swal({
                                     title: 'successfull',
                                     text: 'successfully logIn user',

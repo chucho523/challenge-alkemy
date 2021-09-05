@@ -49,15 +49,19 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
     }
     useEffect(()=>{
         if(type === "update"){
-            getTransaction(idTransaction).then(data => {
-                console.log(data)
-                setTransaction(data)})
+            getTransaction(idTransaction)
+            .then(data => {
+                setTransaction(data)
+                    if(!(data.id_user === parseInt(window.localStorage.getItem('id')))){
+                        history.push('/dashboard')
+                    }
+            })
         }
     },[idTransaction, type])
     return (
             <Fragment>
                 <Formik
-                    enableReinitialize
+                    
                     initialValues={{
                         amount: transaction.amount,
                         concept: transaction.concept,
@@ -66,6 +70,7 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                         date: transaction.date           
                     }}
                     
+                    enableReinitialize
                     //validate errors
                     validate= {(values => {
                         const errors = {};

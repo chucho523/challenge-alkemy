@@ -16,6 +16,7 @@ const NavBar = ({token}) => {
                         <li><button className="logOut" onClick={() => {
                             window.localStorage.removeItem('token');
                             window.localStorage.removeItem('user');
+                            window.localStorage.removeItem('id');
                             window.location.href = '/login'
                         }}>LogOut</button></li>
                         <li><button className="add" onClick={() => history.push('/post')}>Add transaction</button></li>
