@@ -6,6 +6,7 @@ import RegisterView from '../views/Register';
 import Dashboard from '../views/Dashboard';
 import PostTransactionView from '../views/PostTransaction';
 import UpdateTransactionView from '../views/UpdateTransaction';
+import Home from '../views/Home';
 
 //layout
 import NavBar from '../layout/navBar';
@@ -17,7 +18,7 @@ const Routes = () => {
         <Router>
             <NavBar token={token}/>
             <Switch>
-    
+                <Route path="/" exact><Home /></Route>
                 <Route path="/register" render={() =>{
                     return token ? <Redirect to="/dashboard" /> : <RegisterView />
                 }} />
