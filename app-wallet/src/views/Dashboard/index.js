@@ -2,7 +2,7 @@ import React, {Fragment, useState,useEffect} from 'react';
 import getAllTransactions from '../../services/getAllTransactions';
 import getTransactionsFilter from '../../services/getTransactionsFilter';
 import Table from '../../components/common/Table';
-import './styles.scss';
+
 import Balance from '../../components/common/Balance';
 
 
@@ -45,32 +45,33 @@ const Dashboard = () => {
             setTransactions(data);
             setDataRender(data);
         });
+
     }, [])
     return (
         <Fragment>
-            <div className="title"><h4>Balance:</h4></div>
+            <div className="text-center text-3xl underline text-white my-2"><h4>Balance:</h4></div>
             <Balance data={transactions}/>
-            <div className="filterTitle"><h4>Filter By</h4></div>
-            <div className="container">
-                <div className="left">
-                    <fieldset>
-                        <label>
-                            <input type="radio" name="type" value="all" checked={selectedFilter === 'all'} onChange={handleChange} ></input>all
+            <div className="text-center text-3xl underline text-white my-2"><h4>Filter By</h4></div>
+            <div className="container flex flex-wrap w-100 justify-center mb-4 text-white">
+                <div className="left mx-2 mb-2 p-2  w-full sm:w-2/5 bg-indigo-900 rounded">
+                    <fieldset className="flex flex-row justify-center align-center">
+                        <label className="ml-3">
+                            <input className="mr-1" type="radio" name="type" value="all" checked={selectedFilter === 'all'} onChange={handleChange} ></input>all
                         </label>
-                        <label>
-                            <input type="radio" name="type" value="ingress" checked={selectedFilter === 'ingress'} onChange={handleChange} ></input>ingress
+                        <label className="ml-3">
+                            <input className="mr-1" type="radio" name="type" value="ingress" checked={selectedFilter === 'ingress'} onChange={handleChange} ></input>ingress
                         </label>
-                        <label>
-                            <input type="radio" name="type" value="egress" checked={selectedFilter === 'egress'} onChange={handleChange} ></input>egress
+                        <label className="ml-3">
+                            <input className="mr-1" type="radio" name="type" value="egress" checked={selectedFilter === 'egress'} onChange={handleChange} ></input>egress
                         </label>
                         
                     </fieldset>
                 </div>
-                <div className="right">
+                <div className="right w-full sm:w-2/5 mx-2 mb-2 pb-2 bg-indigo-900 rounded">
                     <form>
-                        <fieldset>
-                            <label>
-                                Category: <input name="category" value={category} placeholder="category" onChange={handleChangeCategory}></input>
+                        <fieldset className="flex flex-row justify-center align-center">
+                            <label className="mt-2 px-2">
+                                Category: <input name="category" className="rounded bg-gray-500 pl-2" value={category} placeholder="category" onChange={handleChangeCategory}></input>
                             </label>
                         </fieldset>
                     </form>
