@@ -141,7 +141,7 @@ const PostUpdateTransaction = ({type, idTransaction}) => {
                     {
                         ({errors, handleSubmit, handleChange, isSubmitting}) => 
                             <form onSubmit={handleSubmit} className="registerForm">
-                                <h4>{type} Form</h4>
+                                <h4>{type} Form</h4> 
                                 <input className="controls" placeholder="Amount" name='amount' type="text" onChange={handleChange}></input>
                                 {errors.amount && <p>{errors.amount}</p> /* show error */}
 

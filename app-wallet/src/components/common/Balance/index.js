@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import getTransactionsFilter from '../../../services/getTransactionsFilter'
-import './styles.scss';
 const Balance = (props) => {
     const [balance, setBalance] = useState(0);
     const [data, setData] = useState([]);
@@ -27,8 +26,8 @@ const Balance = (props) => {
             .catch(e => console.log(e))
     }, [props.data])
     return (
-        <div className='balanceContainer'>
-                <div className={balance >0 ? 'ingressB' : 'egressB'}>
+        <div className='w-full flex justify-center text-2xl'> 
+                <div className={balance >0 ? 'bg-green-400 p-2 rounded' : 'bg-red-600 p-2 rounded' }>
                     ${balance}           
                 </div>
             
