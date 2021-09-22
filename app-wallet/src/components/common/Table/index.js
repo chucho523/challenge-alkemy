@@ -6,7 +6,7 @@ import './styles.scss';
 const Table = ({data}) => {
     const history = useHistory();
     return (
-        <table >
+        <table>
             <thead>
                 <tr>
                     <th>Amount</th>

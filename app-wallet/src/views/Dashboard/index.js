@@ -52,7 +52,7 @@ const Dashboard = () => {
             <div className="text-center text-3xl underline text-white my-2"><h4>Balance:</h4></div>
             <Balance data={transactions}/>
             <div className="text-center text-3xl underline text-white my-2"><h4>Filter By</h4></div>
-            <div className="container flex flex-wrap w-100 justify-center mb-4 text-white">
+            <div className="flex flex-wrap w-full justify-center mb-4 text-white">
                 <div className="left mx-2 mb-2 p-2  w-full sm:w-2/5 bg-indigo-900 rounded">
                     <fieldset className="flex flex-row justify-center align-center">
                         <label className="ml-3">
@@ -77,8 +77,8 @@ const Dashboard = () => {
                     </form>
                 </div> 
             </div>
-            <div className="centerTable">
-                <div className="tableContainer">
+            <div className="flex justify-center w-full">
+                <div className="w-11/12 text-white bg-purple-400">
                     <Table data={dataRender}></Table>
                 </div>
             </div>
