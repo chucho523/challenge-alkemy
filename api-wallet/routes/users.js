@@ -50,7 +50,7 @@ route.post('/login', (req, res) => {
                     //create token                    
                     const token = jwt.sign(
                         userForToken,
-                        "chucho523",
+                        process.env.SECRET,
                         {
                             expiresIn: 60 * 60 * 24 * 7 //token expires in 7 days
                         }

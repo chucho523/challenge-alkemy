@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const app = express();
 const users = require('./routes/users');//route users
 const transactions = require('./routes/transactions');//route transactions
